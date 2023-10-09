@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:audioplayers/audioplayers.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -38,18 +38,9 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
   String name = "";
   String number = "";
 
-  /// 播放音频
-  Soundpool soundpool = Soundpool(streamType: StreamType.notification);
-  late int soundId;
 
-  Future<void> playSound() async {
-    soundId = await rootBundle
-        .load('assets/audio/bgm.mp3')
-        .then(((ByteData soundDate) {
-      return soundpool.load(soundDate);
-    }));
-    soundpool.setVolume(volume: 0.5);
-  }
+  AudioPlayer player = AudioPlayer();
+
 
   @override
   void initState() {
@@ -57,7 +48,7 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
       ..initialize().then((value) => () {
             setState(() async {
               _controller.play();
-              await soundpool.play(soundId);
+              await player.play(AssetSource('assets/audio/bgm.mp3'));
             });
           });
     _controller.addListener(() {
