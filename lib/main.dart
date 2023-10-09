@@ -42,7 +42,7 @@ class MusicManger {
 }
 
 class WeddingInvitePage extends StatefulWidget {
-  WeddingInvitePage({super.key});
+  const WeddingInvitePage({super.key});
 
   @override
   State<WeddingInvitePage> createState() => _WeddingInvitePageState();
@@ -98,277 +98,280 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: [
-      Image.asset(
+        body: Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
         "assets/images/AM2I7743.jpg",
-        fit: BoxFit.cover,
-      ),
-      PageView(scrollDirection: Axis.vertical, children: [
-        HotelPageOne(textStyle: _textStyle),
-        Padding(
-            padding: const EdgeInsets.all(40),
-            child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.black45,
-                    border: Border.all(color: Colors.white)),
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 40, horizontal: 30),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const AutoSizeText(
-                            "填写出席信息",
-                            style: TextStyle(
-                              fontSize: 90,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: "NotoSerifSC",
+      ),fit: BoxFit.cover)),
+      child: Stack(children: [
+        PageView(scrollDirection: Axis.vertical, children: [
+          HotelPageOne(textStyle: _textStyle),
+          Padding(
+              padding: const EdgeInsets.all(40),
+              child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.black45,
+                      border: Border.all(color: Colors.white)),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 40, horizontal: 30),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const AutoSizeText(
+                              "填写出席信息",
+                              style: TextStyle(
+                                fontSize: 90,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: "NotoSerifSC",
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 30),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "姓名",
-                                style: _textStyle.copyWith(fontSize: 18),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              TextField(
-                                  onChanged: (text) {
-                                    setState(() {
-                                      name = text;
-                                    });
-                                  },
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "NotoSerifSC",
-                                  ),
-                                  keyboardType: TextInputType.text,
-                                  cursorColor: Colors.white,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0)),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0)),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 20),
-                                  )),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Text(
-                                "家中出席人数",
-                                style: _textStyle.copyWith(fontSize: 18),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              TextField(
-                                  onChanged: (text) {
-                                    setState(() {
-                                      number = text;
-                                    });
-                                  },
-                                  keyboardType: TextInputType.number,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "NotoSerifSC",
-                                  ),
-                                  cursorColor: Colors.white,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0)),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0)),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 20),
-                                  )),
-                              const SizedBox(
-                                height: 45,
-                              ),
-                              MaterialButton(
-                                onPressed: () async {
-                                  Map<String, String> params = {
-                                    "guestName": name,
-                                    "guestPreventNum": number,
-                                  };
-                                  Map<String, String> headers = {
-                                    'Content-Type': 'application/json',
-                                    "Access-Control-Allow-Origin": '*',
-                                  };
-                                  String jsonParams = jsonEncode(params);
-
-                                  http.Response response = await http.post(
-                                    Uri.parse("/api/addguest"),
-                                    headers: headers,
-                                    body: jsonParams,
-                                  );
-                                  if (response.statusCode == 200) {
-                                    // 请求成功
-                                    Map<String, dynamic> responseData =
-                                        jsonDecode(response.body);
-                                    print(responseData.toString());
-                                    // 处理响应数据
-                                  } else {
-                                    // 请求失败
-                                    print('请求失败：${response.statusCode}');
-                                  }
-                                  showDialog<Null>(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: const SingleChildScrollView(
-                                            child: Text(
-                                          "提交完成",
-                                          style: TextStyle(
-                                            fontFamily: "NotoSerifSC",
-                                          ),
-                                        )),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text('确定',
-                                                style: TextStyle(
-                                                  fontFamily: "NotoSerifSC",
-                                                )),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      );
+                            const SizedBox(height: 30),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "姓名",
+                                  style: _textStyle.copyWith(fontSize: 18),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextField(
+                                    onChanged: (text) {
+                                      setState(() {
+                                        name = text;
+                                      });
                                     },
-                                  ).then((val) {
-                                    print(val);
-                                  });
-                                },
-                                minWidth: double.infinity,
-                                shape: const RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        color: Colors.white, width: 1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(200))),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 18),
-                                child: const Text(
-                                  "提交",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900,
-                                    fontFamily: "NotoSerifSC",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "NotoSerifSC",
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    cursorColor: Colors.white,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100.0)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100.0)),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 20),
+                                    )),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Text(
+                                  "家中出席人数",
+                                  style: _textStyle.copyWith(fontSize: 18),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextField(
+                                    onChanged: (text) {
+                                      setState(() {
+                                        number = text;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "NotoSerifSC",
+                                    ),
+                                    cursorColor: Colors.white,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100.0)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100.0)),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 20),
+                                    )),
+                                const SizedBox(
+                                  height: 45,
+                                ),
+                                MaterialButton(
+                                  onPressed: () async {
+                                    Map<String, String> params = {
+                                      "guestName": name,
+                                      "guestPreventNum": number,
+                                    };
+                                    Map<String, String> headers = {
+                                      'Content-Type': 'application/json',
+                                      "Access-Control-Allow-Origin": '*',
+                                    };
+                                    String jsonParams = jsonEncode(params);
+
+                                    http.Response response = await http.post(
+                                      Uri.parse("/api/addguest"),
+                                      headers: headers,
+                                      body: jsonParams,
+                                    );
+                                    if (response.statusCode == 200) {
+                                      // 请求成功
+                                      Map<String, dynamic> responseData =
+                                          jsonDecode(response.body);
+                                      print(responseData.toString());
+                                      // 处理响应数据
+                                    } else {
+                                      // 请求失败
+                                      print('请求失败：${response.statusCode}');
+                                    }
+                                    showDialog<Null>(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: const SingleChildScrollView(
+                                              child: Text(
+                                            "提交完成",
+                                            style: TextStyle(
+                                              fontFamily: "NotoSerifSC",
+                                            ),
+                                          )),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('确定',
+                                                  style: TextStyle(
+                                                    fontFamily: "NotoSerifSC",
+                                                  )),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ).then((val) {
+                                      print(val);
+                                    });
+                                  },
+                                  minWidth: double.infinity,
+                                  shape: const RoundedRectangleBorder(
+                                      side: BorderSide(
+                                          color: Colors.white, width: 1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(200))),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  child: const Text(
+                                    "提交",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w900,
+                                      fontFamily: "NotoSerifSC",
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      "联系方式：",
-                                      style: _textStyle,
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "联系方式：",
+                                        style: _textStyle,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "冯嘉辉 15850230502",
-                                          style: _textStyle,
-                                        ),
-                                        Text(
-                                          "肖沛     18914971630",
-                                          style: _textStyle,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )
-                        ]))))
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "冯嘉辉 15850230502",
+                                            style: _textStyle,
+                                          ),
+                                          Text(
+                                            "肖沛     18914971630",
+                                            style: _textStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )
+                          ]))))
+        ]),
+        // VideoPage(videoPage: videoPage, controller: _controller),
+        // isShow1 ? FirstInvitePage() : Container(),
+        // showLoding
+        //     ? Container(
+        //         width: double.infinity,
+        //         height: double.infinity,
+        //         color: const Color(0xfffffcfc),
+        //         child: Center(
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             crossAxisAlignment: CrossAxisAlignment.center,
+        //             children: [
+        //               Image.asset(
+        //                 "assets/images/010-flamenco-dancers-sexy-couple-silhouettes.png",
+        //                 width: 100,
+        //               ),
+        //               const SizedBox(
+        //                 height: 10,
+        //               ),
+        //               Text(
+        //                 loadingMsg,
+        //                 style: _textStyle.copyWith(
+        //                     fontSize: 22, color: Colors.grey),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //       )
+        //     : Container(),
+        Offstage(
+          offstage: true,
+          child: Column(
+            children: [
+              Image.asset("assets/images/AM2I7837.jpg"),
+              Image.asset("assets/images/AM2I7837.jpg"),
+              Image.asset("assets/images/上花边.png"),
+              Image.asset("assets/images/下花边.png"),
+              Image.asset("assets/images/边框.png"),
+              Image.asset("assets/images/AM2I7660.jpg"),
+              Image.asset("assets/images/AM2I7743.jpg"),
+              Image.asset("assets/images/mapImage1.png"),
+              Image.asset("assets/images/ezgif-3-88a030c11b.gif"),
+            ],
+          ),
+        )
       ]),
-      VideoPage(videoPage: videoPage, controller: _controller),
-      isShow1 ? FirstInvitePage() : Container(),
-      showLoding
-          ? Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: const Color(0xfffffcfc),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/010-flamenco-dancers-sexy-couple-silhouettes.png",
-                      width: 100,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      loadingMsg,
-                      style:
-                          _textStyle.copyWith(fontSize: 22, color: Colors.grey),
-                    )
-                  ],
-                ),
-              ),
-            )
-          : Container(),
-      Offstage(
-        offstage: true,
-        child: Column(
-          children: [
-            Image.asset("assets/images/AM2I7837.jpg"),
-            Image.asset("assets/images/AM2I7837.jpg"),
-            Image.asset("assets/images/上花边.png"),
-            Image.asset("assets/images/下花边.png"),
-            Image.asset("assets/images/边框.png"),
-            Image.asset("assets/images/AM2I7660.jpg"),
-            Image.asset("assets/images/AM2I7743.jpg"),
-            Image.asset("assets/images/mapImage1.png"),
-            Image.asset("assets/images/ezgif-3-88a030c11b.gif"),
-          ],
-        ),
-      )
-    ]));
+    ));
   }
 
   AnimatedOpacity FirstInvitePage() {
