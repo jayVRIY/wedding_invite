@@ -35,7 +35,7 @@ dependencies:
   flutter_svg: ^2.0.5
   http: ^0.13.6
   video_player: ^2.7.2
-
+  soundpool: ^2.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -76,6 +76,7 @@ flutter:
     - assets/images/AM2I7745.jpg
     - assets/images/mapImage1.png
     - assets/images/ezgif-3-88a030c11b.gif
+    - assets/audio/bgm.mp3
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

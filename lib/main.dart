@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:soundpool/soundpool.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
@@ -36,12 +38,26 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
   String name = "";
   String number = "";
 
+  /// 播放音频
+  Soundpool soundpool = Soundpool(streamType: StreamType.notification);
+  late int soundId;
+
+  Future<void> playSound() async {
+    soundId = await rootBundle
+        .load('assets/audio/bgm.mp3')
+        .then(((ByteData soundDate) {
+      return soundpool.load(soundDate);
+    }));
+    soundpool.setVolume(volume: 0.5);
+  }
+
   @override
   void initState() {
     _controller = VideoPlayerController.asset("assets/videos/inviteVideos.mp4")
       ..initialize().then((value) => () {
-            setState(() {
+            setState(() async {
               _controller.play();
+              await soundpool.play(soundId);
             });
           });
     _controller.addListener(() {
@@ -385,7 +401,9 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
                     "assets/images/下花边.png",
                     color: Colors.white,
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Expanded(
                       child: Container(
                     child: Image.asset("assets/images/AM2I7660.jpg"),
