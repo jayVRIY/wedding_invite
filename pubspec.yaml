@@ -36,7 +36,10 @@ dependencies:
   http: ^0.13.6
   video_player: ^2.7.2
   soundpool: ^2.3.0
-  audioplayers: ^4.1.0
+  just_audio: ^0.9.31
+  preload_page_view: ^0.2.0
+  url_launcher: any
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,18 +69,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/videos/inviteVideos.mp4
-    - assets/images/AM2I7837.jpg
-    - assets/images/AM2I7837.jpg
-    - assets/images/下花边.png
-    - assets/images/上花边.png
-    - assets/images/边框.png
-    - assets/images/AM2I7660.jpg
-    - assets/images/AM2I7743.jpg
-    - assets/images/AM2I7745.jpg
-    - assets/images/mapImage1.png
-    - assets/images/ezgif-3-88a030c11b.gif
-    - assets/audio/bgm.mp3
+    - assets/videos/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/images/
+    - assets/audio/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
