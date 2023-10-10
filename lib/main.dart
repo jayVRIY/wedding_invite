@@ -121,6 +121,7 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
           child: Stack(children: [
             PageView(scrollDirection: Axis.vertical, children: [
               HotelPageOne(textStyle: _textStyle),
+              HotelPageTwo(textStyle: _textStyle),
               Padding(
                   padding: const EdgeInsets.all(20),
                   child: Container(
@@ -601,7 +602,193 @@ class HotelPageOne extends StatelessWidget {
             children: [
               Expanded(child: Container()),
               const AutoSizeText(
-                "宴会信息",
+                "午宴信息",
+                style: TextStyle(
+                  fontSize: 90,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: "NotoSerifSC",
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.visible,
+              ),
+              const SizedBox(height: 20),
+              Expanded(child: Container()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      "酒店名称：",
+                      style: _textStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "昆山体育国际大酒店",
+                      style: _textStyle,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      "午宴地址：",
+                      style: _textStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "中国江苏省苏州市昆山市前进西路1800号",
+                      style: _textStyle,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      "宴会时间：",
+                      style: _textStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "11月5日 11点18分",
+                      style: _textStyle,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      "交通工具：",
+                      style: _textStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      "地铁11号线坐至昆山文化艺术中心3号口下地铁",
+                      style: _textStyle,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(child: Container()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RotatedBox(
+                    quarterTurns: 2,
+                    child: Image.asset(
+                      "assets/images/ezgif-3-88a030c11b.gif",
+                      height: 20,
+                    ),
+                  ),
+                  const Text(
+                    '点击图片仔细查看目标地点',
+                    style: TextStyle(
+                      color: Color(0xFFFFD3AB),
+                      fontFamily: "NotoSerifSC",
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () async {
+                  const url = 'https://surl.amap.com/IsKY1gX6aNp';
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else
+                    // can't launch url, there is some error
+                    throw "Could not launch $url";
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 5)),
+                  child: Image.asset(
+                    "assets/images/mapImage2.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Expanded(child: Container()),
+              Expanded(child: Container()),
+              Expanded(child: Container()),
+              Column(
+                children: [
+                  Image.asset(
+                    "assets/images/ezgif-3-88a030c11b.gif",
+                    height: 30,
+                  ),
+                  Text(
+                    "上拉晚宴信息",
+                    style: _textStyle.copyWith(fontSize: 20),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+class HotelPageTwo extends StatelessWidget {
+  const HotelPageTwo({
+    super.key,
+    required TextStyle textStyle,
+  }) : _textStyle = textStyle;
+
+  final TextStyle _textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.black45, border: Border.all(color: Colors.white)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Container()),
+              const AutoSizeText(
+                "晚宴信息",
                 style: TextStyle(
                   fontSize: 90,
                   color: Colors.white,
@@ -749,7 +936,7 @@ class HotelPageOne extends StatelessWidget {
                     height: 30,
                   ),
                   Text(
-                    "上拉填写出席信息",
+                    "上拉填写晚宴出席信息",
                     style: _textStyle.copyWith(fontSize: 20),
                   )
                 ],
@@ -762,6 +949,7 @@ class HotelPageOne extends StatelessWidget {
     );
   }
 }
+
 
 class VideoPage extends StatefulWidget {
   const VideoPage({
