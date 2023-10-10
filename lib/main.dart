@@ -80,7 +80,7 @@ class _WeddingInvitePageState extends State<WeddingInvitePage> {
     int count = 0;
     Timer.periodic(const Duration(seconds: 1), (timer) {
       count++;
-      if (count == 6) {
+      if (count == 7) {
         setState(() {
           showLoding = false;
           timer.cancel();
